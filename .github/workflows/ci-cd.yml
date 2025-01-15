@@ -38,12 +38,16 @@ jobs:
             cd server
             source venv/bin/activate
             pip3 install django gunicorn
+            echo "Installed Requirements."
             cd notes
             python3 manage.py migrate
+            echo "Made Migrations."
 
             cd ../../client
             npm install
             npm run build
+            echo "Built client"
 
             sudo systemctl restart gunicorn
+            echo "Restarted gunicorn"
           EOF
