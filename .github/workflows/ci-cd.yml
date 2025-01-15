@@ -21,6 +21,9 @@ jobs:
         run: |
           # SSH into your server and do the following:
           ssh -o StrictHostKeyChecking=no vcm@vcm-45219.vm.duke.edu << 'EOF'
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+            export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install node
             cd /var/www/notes-web-app
             git config --global --add safe.directory /var/www/notes-web-app
             sudo git pull origin main
