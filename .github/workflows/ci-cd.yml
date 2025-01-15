@@ -28,6 +28,7 @@ jobs:
             nvm install node
             cd /var/www/notes-web-app
             git config --global --add safe.directory /var/www/notes-web-app
+            sudo git reset --hard HEAD
             sudo git pull origin main
 
             cd server
