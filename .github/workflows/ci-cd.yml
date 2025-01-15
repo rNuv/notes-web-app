@@ -21,12 +21,6 @@ jobs:
         run: |
           # SSH into your server and do the following:
           ssh -o StrictHostKeyChecking=no vcm@vcm-45219.vm.duke.edu << 'EOF'
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-            export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-            echo "NVM has been loaded."
-            nvm install node
-            echo "Node Installed."
             sudo chmod -R 777 /var/www/notes-web-app
             echo "Permissions granted."
             cd /var/www/notes-web-app
