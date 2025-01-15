@@ -36,6 +36,9 @@ jobs:
             python3 manage.py makemigrations
             python3 manage.py migrate
             echo "Made Migrations."
+            sudo chown www-data:www-data db.sqlite3
+            sudo chmod 777 db.sqlite3
+            echo "Made database readable."
 
             cd ../../client
             export NVM_DIR="$HOME/.nvm"
