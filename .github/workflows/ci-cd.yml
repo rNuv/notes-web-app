@@ -30,9 +30,10 @@ jobs:
 
             cd server
             source venv/bin/activate
-            pip3 install django gunicorn
+            pip3 install django gunicorn djangorestframework django-cors-headers
             echo "Installed Requirements."
             cd notes
+            python3 manage.py makemigrations
             python3 manage.py migrate
             echo "Made Migrations."
 
