@@ -19,7 +19,7 @@ from django.urls import path
 from django.http import HttpResponse
 
 def hello_world(request):
-    return HttpResponse('Hello from Nayak')
+    return HttpResponse('Hey there from Nayak')
 
 urlpatterns = [
     path("admin/", admin.site.urls),
