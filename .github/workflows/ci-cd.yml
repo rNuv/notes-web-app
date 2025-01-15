@@ -20,7 +20,7 @@ jobs:
       - name: Deploy to Server
         run: |
           # SSH into your server and do the following:
-          ssh -o StrictHostKeyChecking=no an251@vcm-45219.vm.duke.edu << 'EOF'
+          ssh -o StrictHostKeyChecking=no vcm@vcm-45219.vm.duke.edu << 'EOF'
             cd /var/www/notes-web-app
             git pull origin main
 
