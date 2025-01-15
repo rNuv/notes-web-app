@@ -20,5 +20,5 @@ from django.http import HttpResponse
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/notes/', include('notes_api.urls')),
+    path('notes/', include('notes_api.urls')),
 ]
