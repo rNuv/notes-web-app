@@ -21,8 +21,7 @@ jobs:
         run: |
           # SSH into your server and do the following:
           ssh -o StrictHostKeyChecking=no vcm@vcm-45219.vm.duke.edu << 'EOF'
-            sudo chmod -R 777 /var/www/notes-web-app
-            echo "Permissions granted."
+            sudo chmod -R u+w /var/www/notes-web-app
             cd /var/www/notes-web-app
             git config --global --add safe.directory /var/www/notes-web-app
             sudo git reset --hard HEAD
@@ -41,6 +40,7 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use 23.6.0
+            sudo chmod -R 777 /var/www/notes-web-app/client
             npm install
             npm run build
             echo "Built client"
