@@ -26,10 +26,14 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
             echo "NVM has been loaded."
             nvm install node
+            echo "Node Installed."
+            sudo chmod -R 777 /var/www/notes-web-app
+            echo "Permissions granted."
             cd /var/www/notes-web-app
             git config --global --add safe.directory /var/www/notes-web-app
             sudo git reset --hard HEAD
             sudo git pull origin main
+            echo "Repo Pulled."
 
             cd server
             source venv/bin/activate
