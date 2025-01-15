@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Note } from './types';
 import { getNotes, createNote, updateNote, deleteNote } from './services/noteService';
-import './App.css'
+import './App.css';
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -9,6 +9,7 @@ function App() {
   const [content, setContent] = useState('');
   const [editingNote, setEditingNote] = useState<Note | null>(null);
 
+  // Fetch notes on component mount
   useEffect(() => {
     fetchNotes();
   }, []);
@@ -27,17 +28,16 @@ function App() {
 
     try {
       if (editingNote) {
-        // Update existing
+        // Update existing note
         const updated = await updateNote(editingNote.id!, { title, content });
-        setNotes(
-          notes.map((note) => (note.id === editingNote.id ? updated : note))
-        );
+        setNotes((prev) => prev.map((n) => (n.id === editingNote.id ? updated : n)));
         setEditingNote(null);
       } else {
-        // Create new
+        // Create new note
         const newNote = await createNote({ title, content });
-        setNotes([newNote, ...notes]);
+        setNotes((prev) => [newNote, ...prev]);
       }
+
       // Reset form
       setTitle('');
       setContent('');
@@ -55,57 +55,55 @@ function App() {
   const handleDelete = async (id: number) => {
     try {
       await deleteNote(id);
-      setNotes(notes.filter((note) => note.id !== id));
+      setNotes((prev) => prev.filter((note) => note.id !== id));
     } catch (err) {
       console.error('Error deleting note:', err);
     }
   };
 
   return (
-    <div style={{ margin: 'auto', maxWidth: 600, padding: 20}}>
-      <h1>My Notes</h1>
+    <div className="App">
+      <h1>Notes App</h1>
+      <h2>ECE 458 Micro-project</h2>
 
-      <form onSubmit={handleCreateOrUpdate} style={{ marginBottom: 20 }}>
-        <div>
+      <div className="noteForm">
+        <h2>{editingNote ? 'Edit Note' : 'Create a Note'}</h2>
+        <form onSubmit={handleCreateOrUpdate}>
           <input
             type="text"
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
             required
           />
-        </div>
-        <div style={{ marginTop: 10 }}>
           <textarea
-            placeholder="Content"
+            placeholder="Content (optional)"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
             rows={4}
           />
-        </div>
-        <button type="submit" style={{ marginTop: 10 }}>
-          {editingNote ? 'Update Note' : 'Create Note'}
-        </button>
-      </form>
+          <button type="submit">{editingNote ? 'Update Note' : 'Create Note'}</button>
+        </form>
+      </div>
 
-      <hr />
-
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <div className="noteList">
         {notes.map((note) => (
-          <li key={note.id} style={{ border: '1px solid #ccc', padding: 10, marginBottom: 10 }}>
+          <div key={note.id} className="noteCard">
             <h2>{note.title}</h2>
             <p>{note.content}</p>
-            <small>Created: {new Date(note.created_at ?? '').toLocaleString()}</small><br />
-            <small>Updated: {new Date(note.updated_at ?? '').toLocaleString()}</small>
-            <div style={{ marginTop: 10 }}>
-              <button onClick={() => handleEdit(note)} style={{ marginRight: 10 }}>Edit</button>
-              <button onClick={() => handleDelete(note.id!)}>Delete</button>
+            <small>
+              Created: {new Date(note.created_at ?? '').toLocaleString()} <br />
+              Updated: {new Date(note.updated_at ?? '').toLocaleString()}
+            </small>
+            <div className="noteActions">
+              <button onClick={() => handleEdit(note)}>Edit</button>
+              <button className="deleteBtn" onClick={() => handleDelete(note.id!)}>
+                Delete
+              </button>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
