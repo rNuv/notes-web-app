@@ -23,14 +23,15 @@ jobs:
           ssh -o StrictHostKeyChecking=no vcm@vcm-45219.vm.duke.edu << 'EOF'
             cd /var/www/notes-web-app
             git config --global --add safe.directory /var/www/notes-web-app
-            git pull origin main
+            sudo git pull origin main
 
             cd server
             source venv/bin/activate
             pip3 install django gunicorn
+            cd notes
             python3 manage.py migrate
 
-            cd ../client
+            cd ../../client
             npm install
             npm run build
 
