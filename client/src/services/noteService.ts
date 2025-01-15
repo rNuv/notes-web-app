@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Note } from '../types';
 
-const API_URL = 'http://127.0.0.1:8000/api/notes';
+const API_URL = 'http://vcm-45219.vm.duke.edu/api/notes';
 
 export async function getNotes(): Promise<Note[]> {
   const response = await axios.get<Note[]>(`${API_URL}/`);
