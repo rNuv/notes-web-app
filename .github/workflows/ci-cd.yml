@@ -22,6 +22,7 @@ jobs:
           # SSH into your server and do the following:
           ssh -o StrictHostKeyChecking=no vcm@vcm-45219.vm.duke.edu << 'EOF'
             cd /var/www/notes-web-app
+            git config --global --add safe.directory /var/www/notes-web-app
             git pull origin main
 
             cd server
